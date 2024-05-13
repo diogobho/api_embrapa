@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-def scrape_viti_producao(year):
-    url = f'http://vitibrasil.cnpuv.embrapa.br/index.php?ano={year}&opcao=opt_02'
+def scrape_viti_comercializacao(year):
+    url = f'http://vitibrasil.cnpuv.embrapa.br/index.php?ano={year}&opcao=opt_04'
 
     response = requests.get(url)
 
