@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{titulo}}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.css')}}">
+</head>
+<body>
+    <header>
+
+        <a href="{{ url_for('index')}}"> HOME </a>
+        <a href="{{ url_for('producao')}}"> PRODUÇÃO </a>
+    </header>
+    <h1> Produção </h1>
+    <!-- Formulário para escolher o ano -->
+    <form method="post">
+        <label for="ano">Escolha o ano (1970-2022):</label>
+        <input type="number" id="ano" name="ano" min="1970" max="2022" required>
+        <button type="submit">Buscar</button>
+    </form>
+    
+    <!-- Se houver dados para exibir, renderiza o HTML do DataFrame -->
+    {% if table %}
+    <h2>Dados para o ano {{ user_year }}:</h2>
+    {{ table | safe }}
+    {% endif %}
+</body>
+</html>
