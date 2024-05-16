@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embrapa</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.css')}}">
-</head>
-<body>
-    <header>
-        <h1>EMBRAPA - Vitivicultura</h1>
-        <a href="{{ url_for('producao')}}"> Produção</a>
-        <a href="{{ url_for('comercializacao')}}"> Comercialização </a>
-    </header>
-    
+{%extends 'partials/_head.html'%}
+{%block conteudo%}
     <main></main>
 
-    <footer></footer>
-    
-</body>
-</html>
+    <footer></footer> 
+{%endblock%}

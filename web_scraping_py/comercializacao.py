@@ -12,7 +12,7 @@ def scrape_viti_comercializacao(year):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        tabela = 'Producao'
+        tabela = 'Comercializacao'
         produto = ''
         sub_produto = ''
         quantidade = ''
