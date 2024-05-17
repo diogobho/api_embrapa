@@ -1,17 +1,6 @@
 {%extends 'partials/_head.html'%}
 {%block conteudo%}
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %} 
-            <ul id="messages" class="list-unstyled">
-            {% for message in messages %}
-                <li class="alert alert-success">{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
-
     <form method="POST" action="/autenticar">
         <h1>Login</h1>
         <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
