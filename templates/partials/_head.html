@@ -8,14 +8,24 @@
 </head>
 <body>
     <header>
-        <h1 class="hearder-h1">{{titulo}}</h1>
+        <h1 class="header-h1">Embrapa</h1>
         <div class="header-links">
             <a class="header-links-link" href="{{ url_for('index')}}"> HOME </a>
             <a class="header-links-link" href="{{ url_for('producao')}}"> PRODUÇÃO </a>
             <a class="header-links-link" href="{{ url_for('comercializacao')}}"> COMERCIALIZAÇÃO </a>
         </div>
+        <a class="header-login" href="{{ url_for('login')}}">LOGIN</a>
     </header>
-
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %} 
+            <ul id="messages" class="list-unstyled">
+            {% for message in messages %}
+                <li class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 
     {%block conteudo%} {%endblock%}
 

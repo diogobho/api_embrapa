@@ -4,29 +4,108 @@
   padding: 0;
   margin: 0;
 }
-header{
-  padding: 25px;
-  background-color: rgb(79, 120, 202);
-  color: #000;
-}
-.hearder-h1{
-  font-family: 'inter', sans-serif;
-  padding: 10px 0px;
-}
-.header-link{
-  margin-top: 10px;
+body{
+  background-color: rgb(220, 220, 220);
 }
 
-.header-links-link{
-  padding: 0 5px;
-  text-decoration: none;
-  color: #000;
+/* Estilos para o cabeçalho */
+header {
+  background-color: rgb(129, 67, 191); /* Cor de fundo roxa */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
   font-family: "Roboto", sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Estilos para o título do cabeçalho */
+.header-h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* Estilos para o contêiner dos links do cabeçalho */
+.header-links {
+  display: flex;
+  gap: 15px;
+}
+
+/* Estilos para os links do cabeçalho */
+.header-links-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: color 0.3s;
+}
+
+.header-links-link:hover {
+  color: #ffcc00; /* Cor amarela ao passar o mouse */
+}
+
+/* Estilos para o link de login */
+.header-login {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.header-login:hover {
+  color: #ffcc00; /* Cor amarela ao passar o mouse */
+}
+
+
+
+
 .table {
   text-align: center;
   padding: 25px;
 }
+/* Estilos para o formulário de escolha do ano */
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  font-family: "Roboto", sans-serif;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(129, 67, 191); 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: rgb(82, 23, 142); 
+}
+
 
 table {
   margin: 0 auto; /* Centraliza a tabela horizontalmente */
@@ -35,7 +114,99 @@ table {
   max-width: 100%;
 }
 
+th {
+  background-color: #e0dddd; /* Cor de fundo para os nomes das colunas */
+  color: #333; /* Cor do texto dos nomes das colunas */
+  padding: 10px; /* Espaçamento interno das células de cabeçalho */
+  text-align: center; /* Centraliza o texto no cabeçalho */
+}
+
+td {
+  padding: 10px; /* Espaçamento interno das células de dados */
+  text-align: center; /* Centraliza o texto nas células de dados */
+}
+
 .table-h2 {
+  margin-left: 25px;
   font-family: "Roboto", sans-serif;
   text-align: center;
 }
+
+/* Estilos para o contêiner do formulário */
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Estilos para o título */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilos para os parágrafos e rótulos */
+form p {
+  margin: 15px 0;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Estilos para os campos de entrada */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Estilos para o botão */
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(129, 67, 191);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgb(82, 23, 142); 
+}
+
+/* Estilos para a mensagem flash */
+#messages {
+  margin-top: 20px;
+  padding: 10px;
+  list-style: none;
+  text-align: center; /* Alinha horizontalmente */
+}
+
+#messages li {
+  display: inline-block; /* Permite centralizar verticalmente */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
