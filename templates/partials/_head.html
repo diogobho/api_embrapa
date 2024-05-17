@@ -14,7 +14,13 @@
             <a class="header-links-link" href="{{ url_for('producao')}}"> PRODUÇÃO </a>
             <a class="header-links-link" href="{{ url_for('comercializacao')}}"> COMERCIALIZAÇÃO </a>
         </div>
-        <a class="header-login" href="{{ url_for('login')}}">LOGIN</a>
+        <div>
+        <a class="header-login" href="{{ url_for('login') }}">LOGIN</a>
+        {% if session.usuario_logado %}
+            <a class="header-logout" href="{{ url_for('logout') }}">LOGOUT</a>
+        {% endif %}
+        </div>
+    </div>
     </header>
     
     {% with messages = get_flashed_messages() %}

@@ -44,15 +44,19 @@ header {
   color: #ffcc00; /* Cor amarela ao passar o mouse */
 }
 
-/* Estilos para o link de login */
-.header-login {
-  color: white;
-  text-decoration: none;
-  font-size: 1em;
-  transition: color 0.3s;
+/* Estilos para os links de login e logout */
+.header-login,
+.header-logout {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s;
+    margin-right: 10px; /* Adiciona uma margem à direita para separação */
 }
 
-.header-login:hover {
+
+.header-login:hover,
+.header-logout:hover {
   color: #ffcc00; /* Cor amarela ao passar o mouse */
 }
 

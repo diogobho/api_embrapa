@@ -60,6 +60,12 @@ def autenticar():
     else:
         flash('Login não efetuado.')
         return redirect('/login')
+    
+@app.route('/logout')
+def logout():
+    session['usuario_logado'] = None
+    flash('Usuário deslogado com sucesso.')
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)
