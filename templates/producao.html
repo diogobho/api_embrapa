@@ -1,5 +1,6 @@
 {%extends 'partials/_head.html'%}
 {%block conteudo%}
+
     <!-- Formulário para escolher o ano -->
     <form method="post">
         <label for="ano">Escolha o ano (1970-2022):</label>
@@ -8,8 +9,10 @@
     </form>
     
     <!-- Se houver dados para exibir, renderiza o HTML do DataFrame -->
-    {% if table %}
-    <h2>Dados para o ano {{ user_year }}:</h2>
-    {{ table | safe }}
-    {% endif %}
+    <div class="table">
+        {% if table %}
+        <h2 class="table-h2">Dados de {{nome}} para o ano {{ user_year }}:</h2>
+        {{ table | safe }}
+        {% endif %}
+    </div>
 {%endblock%}
