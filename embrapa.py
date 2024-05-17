@@ -14,7 +14,7 @@ def index():
 def producao():
 
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login')
+        return redirect(url_for('login',proxima=url_for('producao')))
 
     if request.method == 'POST':
         user_year = int(request.form['ano'])
@@ -32,11 +32,11 @@ def producao():
                                table=None,  
                                nome = 'Produção')
     
-@app.route('/comercialização', methods=['POST', 'GET'])
+@app.route('/comercializacao', methods=['POST', 'GET'])
 def comercializacao():
 
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login')
+        return redirect(url_for('login', proxima=url_for('comercializacao')))
 
     if request.method == 'POST':
         user_year = int(request.form['ano'])
@@ -57,22 +57,37 @@ def comercializacao():
 # ROTAS PARA AUTENTICAÇÃO
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    proxima = request.args.get('proxima', url_for('index'))
+
+    if 'usuario_logado' in session:
+        flash('Você já está logado.', 'info')
+        return redirect(url_for('index'))
+    
+    return render_template('login.html', proxima=proxima)
 
 @app.route('/autenticar', methods=['POST'])
 def autenticar():
+
     if 'teste' == request.form['senha']:
+
         session['usuario_logado'] = request.form['usuario']
         flash(session['usuario_logado'] + ' logado com sucesso!', 'success')
-        return redirect(url_for('index'))
+
+        proxima_pag = request.form.get('proxima', url_for('index'))
+
+        return redirect(proxima_pag)
+    
     else:
+
         flash('Login não efetuado.', 'error')
         return redirect(url_for('login'))
     
 @app.route('/logout')
 def logout():
+
     session.pop('usuario_logado', None) 
     flash('Usuário deslogado com sucesso.', 'success')
+
     return redirect(url_for('login'))
 
 if __name__ == "__main__":

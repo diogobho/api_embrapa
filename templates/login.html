@@ -1,7 +1,8 @@
 {%extends 'partials/_head.html'%}
 {%block conteudo%}
 
-    <form method="POST" action="/autenticar">
+    <form method="POST" action="{{ url_for('autenticar') }}">
+        <input type="hidden" name="proxima" value="{{ proxima }}">
         <h1>Login</h1>
         <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
         <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>

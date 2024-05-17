@@ -10,14 +10,16 @@
     <header>
         <h1 class="header-h1">Embrapa</h1>
         <div class="header-links">
-            <a class="header-links-link" href="{{ url_for('index')}}"> HOME </a>
-            <a class="header-links-link" href="{{ url_for('producao')}}"> PRODUÇÃO </a>
-            <a class="header-links-link" href="{{ url_for('comercializacao')}}"> COMERCIALIZAÇÃO </a>
+            <a class="header-links-link" href="{{ url_for('index')}}"> Home </a>
+            <a class="header-links-link" href="{{ url_for('producao')}}"> Produção </a>
+            <a class="header-links-link" href="{{ url_for('comercializacao')}}"> Comercialização </a>
         </div>
-        <div>
-            <a class="header-login" href="{{ url_for('login') }}">LOGIN</a>
+        <div class="header-user">
             {% if session.usuario_logado %}
-                <a class="header-logout" href="{{ url_for('logout') }}">LOGOUT</a>
+                <span class="header-user-span">Bem-vindo, {{ session.usuario_logado }}!</span>
+                <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a class="header-login" href="{{ url_for('login') }}">Login</a>
             {% endif %}
         </div>
     </div>

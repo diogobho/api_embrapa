@@ -44,24 +44,35 @@ header {
   color: #ffcc00; /* Cor amarela ao passar o mouse */
 }
 
-/* Estilos para os links de login e logout */
-.header-login,
-.header-logout {
-    color: white;
-    text-decoration: none;
-    font-size: 1em;
-    transition: color 0.3s;
-    margin-right: 10px; /* Adiciona uma margem à direita para separação */
+/* Estilos para a div do usuário */
+.header-user {
+  display: flex;
+  flex-direction: column; /* Alinha os itens verticalmente */
+  align-items: flex-end; /* Alinha os itens à direita */
 }
 
+/* Estilos para o span e link de logout */
+.header-user-span {
+  font-size: 1em;
+}
+
+/* Estilos para os links de login e logout */
+.header-login {
+  text-decoration: none;
+  color: white;
+}
+
+.header-logout {
+  text-decoration: none;
+  color: white;
+  text-indent: 1em; /* Indenta o link de logout para alinhar abaixo da primeira letra do span */
+  margin-top: 5px; /* Espaço entre o span e o link de logout */
+}
 
 .header-login:hover,
 .header-logout:hover {
   color: #ffcc00; /* Cor amarela ao passar o mouse */
 }
-
-
-
 
 .table {
   text-align: center;
@@ -195,6 +206,7 @@ form label {
 
 /* Estilos para a mensagem flash */
 #messages {
+  font-family: "Roboto", sans-serif;
   margin-top: 20px;
   padding: 10px;
   list-style: none;
