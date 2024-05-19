@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMBRAPA</title>
+    <title>Embrapa - {{nome}}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.css')}}">
 </head>
 <body>
@@ -13,6 +13,7 @@
             <a class="header-links-link" href="{{ url_for('index')}}"> Home </a>
             <a class="header-links-link" href="{{ url_for('producao')}}"> Produção </a>
             <a class="header-links-link" href="{{ url_for('comercializacao')}}"> Comercialização </a>
+            <a class="header-links-link" href="{{ url_for('processamento')}}"> Processamento </a>
         </div>
         <div class="header-user">
             {% if session.usuario_logado %}

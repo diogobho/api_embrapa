@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from web_scraping_py.producao import scrape_viti_producao
 from web_scraping_py.comercializacao import scrape_viti_comercializacao
+from web_scraping_py.processamento import scrape_viti_processamento
 
 app = Flask(__name__)
 app.secret_key = 'embrapa'
@@ -50,9 +51,32 @@ def comercializacao():
                                nome = 'Comercialização')
     
     elif request.method == 'GET':
-        return render_template('producao.html', 
+        return render_template('comercializacao.html', 
                                table=None,  
                                nome = 'Comercialização')
+    
+@app.route('/processamento', methods=['POST', 'GET'])
+def processamento():
+
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('processamento')))
+    
+    if request.method == 'POST':
+        user_year = int(request.form['ano'])
+        user_option = request.form['opcao']
+
+        df = scrape_viti_processamento(user_year, user_option)
+        df_html = df.to_html(index=False)
+
+        return render_template('processamento.html', 
+                               table=df_html, 
+                               user_year=user_year,  
+                               nome = 'Processamento')
+    
+    elif request.method == 'GET':
+        return render_template('processamento.html', 
+                               table=None,  
+                               nome = 'Processamento')
     
 # ROTAS PARA AUTENTICAÇÃO
 @app.route('/login')

@@ -203,6 +203,32 @@ form label {
 .btn:hover {
   background-color: rgb(82, 23, 142); 
 }
+/* Estilos para o campo de seleção (select) */
+form select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: white; /* Fundo branco para o select */
+  font-family: "Roboto", sans-serif; /* Fonte consistente */
+  color: #555; /* Cor do texto */
+}
+
+/* Estilos para o campo de seleção ao focar */
+form select:focus {
+  border-color: rgb(129, 67, 191); /* Cor da borda ao focar */
+  outline: none; /* Remove o outline padrão */
+}
+
+/* Estilos para a opção (option) dentro do select */
+form select option {
+  padding: 10px;
+  font-family: "Roboto", sans-serif;
+  color: #333; /* Cor do texto das opções */
+  background-color: white; /* Fundo branco para as opções */
+}
 
 /* Estilos para a mensagem flash */
 #messages {
