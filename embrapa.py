@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from web_scraping_py.producao import scrape_viti_producao
 from web_scraping_py.comercializacao import scrape_viti_comercializacao
 from web_scraping_py.processamento import scrape_viti_processamento
+from web_scraping_py.importacao_exportacao  import scrape_viti_imp_exp
 
 app = Flask(__name__)
 app.secret_key = 'embrapa'
@@ -35,7 +36,6 @@ def producao():
     
 @app.route('/comercializacao', methods=['POST', 'GET'])
 def comercializacao():
-
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('login', proxima=url_for('comercializacao')))
 
@@ -77,6 +77,43 @@ def processamento():
         return render_template('processamento.html', 
                                table=None,  
                                nome = 'Processamento')
+        
+@app.route('/importacao', methods=['POST', 'GET'])
+def importacao():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return redirect(url_for('login', proxima=url_for('comercializacao')))
+
+    if request.method == 'POST':
+        user_year = int(request.form['ano'])
+
+        df = scrape_viti_imp_exp(user_year, 'opt_05')
+        if df is not None:
+            df_html = df.to_html(index=False)
+            return render_template('importacao.html', table=df_html, user_year=user_year, nome='Importação')
+        else:
+            return render_template('importacao.html', error_message='Falha ao obter os dados de importação.', nome='Importação')
+
+    # Caso o método seja GET, renderizar a página padrão
+    return render_template('importacao.html', nome='Importação')
+        
+@app.route('/exportacao', methods=['POST', 'GET'])
+def exportacao():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        return redirect(url_for('login', proxima=url_for('comercializacao')))
+
+    if request.method == 'POST':
+        user_year = int(request.form['ano'])
+
+        df = scrape_viti_imp_exp(user_year, 'opt_06')
+        if df is not None:
+            df_html = df.to_html(index=False)
+            return render_template('exportacao.html', table=df_html, user_year=user_year, nome='Exportação')
+        else:
+            return render_template('exportacao.html', error_message='Falha ao obter os dados de exportação.', nome='Exportação')
+
+    # Caso o método seja GET, renderizar a página padrão
+    return render_template('exportacao.html', nome='Exportação')
+
     
 # ROTAS PARA AUTENTICAÇÃO
 @app.route('/login')

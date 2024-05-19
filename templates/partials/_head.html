@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Embrapa - {{nome}}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.css')}}">
 </head>
+
 <body>
     <header>
         <h1 class="header-h1">Embrapa</h1>
@@ -14,30 +16,33 @@
             <a class="header-links-link" href="{{ url_for('producao')}}"> Produção </a>
             <a class="header-links-link" href="{{ url_for('comercializacao')}}"> Comercialização </a>
             <a class="header-links-link" href="{{ url_for('processamento')}}"> Processamento </a>
+            <a class="header-links-link" href="{{ url_for('importacao')}}"> Importação </a>
+            <a class="header-links-link" href="{{ url_for('exportacao')}}"> Exportação </a>
         </div>
         <div class="header-user">
             {% if session.usuario_logado %}
-                <span class="header-user-span">Bem-vindo, {{ session.usuario_logado }}!</span>
-                <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
+            <span class="header-user-span">Bem-vindo, {{ session.usuario_logado }}!</span>
+            <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
-                <a class="header-login" href="{{ url_for('login') }}">Login</a>
+            <a class="header-login" href="{{ url_for('login') }}">Login</a>
             {% endif %}
         </div>
-    </div>
+        </div>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul id="messages" class="list-unstyled">
-                {% for category, message in messages %}
-                    <li class="alert alert-{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        
+    {% if messages %}
+    <ul id="messages" class="list-unstyled">
+        {% for category, message in messages %}
+        <li class="alert alert-{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {% endwith %}
 
     {%block conteudo%} {%endblock%}
 
 </body>
+
 </html>
