@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, session, flash, url_for
-from embrapa import app
+from embrapa import app, db
+from models import Usuarios
 
 @app.route('/login')
 def login():
@@ -13,20 +14,18 @@ def login():
 
 @app.route('/autenticar', methods=['POST'])
 def autenticar():
+    usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
+    if usuario:
+        if request.form['senha'] == usuario.senha:
+            session['usuario_logado'] = usuario.nickname
+            flash(usuario.nickname + ' logou com sucesso.', 'success')
+            proxima_pag = request.form.get('proxima', url_for('index'))
+            return redirect(proxima_pag)
+        
+        else:
 
-    if 'teste' == request.form['senha']:
-
-        session['usuario_logado'] = request.form['usuario']
-        flash(session['usuario_logado'] + ' logado com sucesso!', 'success')
-
-        proxima_pag = request.form.get('proxima', url_for('index'))
-
-        return redirect(proxima_pag)
-    
-    else:
-
-        flash('Login não efetuado.', 'error')
-        return redirect(url_for('login'))
+            flash('Login não efetuado.', 'error')
+            return redirect(url_for('login'))
     
 @app.route('/logout')
 def logout():
