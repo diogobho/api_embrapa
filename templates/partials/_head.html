@@ -21,10 +21,11 @@
         </div>
         <div class="header-user">
             {% if session.usuario_logado %}
-            <span class="header-user-span">Bem-vindo, {{ session.usuario_logado }}!</span>
-            <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
+                <span class="header-user-span">Bem-vindo, {{ session.usuario_logado.capitalize() }}!</span>
+                <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
-            <a class="header-login" href="{{ url_for('login') }}">Login</a>
+                <a class="header-login" href="{{ url_for('login') }}">Login</a>
+                <a class="header-login" href="{{ url_for('register') }}">Registro</a>
             {% endif %}
         </div>
         </div>

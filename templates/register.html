@@ -1,0 +1,21 @@
+{%extends 'partials/_head.html'%}
+{%block conteudo%}
+
+    <form method="post" action="{{ url_for('register') }}" class="register-form">
+        
+        <h1 class="register-title">{{titulo}}</h1>
+        <label for="nome" class="register-label">Nome:</label>
+        <input type="text" id="nome" name="nome" class="register-input" required>
+        
+        <label for="username" class="register-label">Username:</label>
+        <input type="text" id="username" name="nickname" class="register-input" required>
+        
+        <label for="senha" class="register-label">Senha:</label>
+        <input type="password" id="senha" name="senha1" class="register-input" required>
+        
+        <label for="confirmar_senha" class="register-label">Confirmar Senha:</label>
+        <input type="password" id="confirmar_senha" name="senha2" class="register-input" required>
+        
+        <button type="submit" class="register-btn">Registrar</button>
+    </form>
+{%endblock%}

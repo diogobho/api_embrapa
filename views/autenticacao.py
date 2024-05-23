@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from embrapa import app, db
 from models import Usuarios
+from flask_sqlalchemy import SQLAlchemy
 
 @app.route('/login')
 def login():
@@ -34,3 +35,26 @@ def logout():
     flash('Usuário deslogado com sucesso.', 'success')
 
     return redirect(url_for('login'))
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    proxima = request.args.get('proxima', url_for('index'))
+    if request.method == 'POST':
+
+        nome = request.form['nome']
+        nickname = request.form['nickname']
+        senha1 = request.form['senha1']
+        senha2 = request.form['senha2']
+
+        if senha1 != senha2:
+            flash('Senhas não coincidem.', 'error')
+            return redirect(url_for('register'))
+
+
+        novo_usuario = Usuarios(nome=nome, nickname=nickname, senha=senha1)
+        db.session.add(novo_usuario)
+        db.session.commit()
+        flash('Usuário registrado com sucesso!', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('register.html', titulo= 'Registro de usuários')
