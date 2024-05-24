@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash, url_for
+from flask import render_template, request, redirect, session, url_for
 from embrapa import app
 from web_scraping_py.producao import scrape_viti_producao
 from web_scraping_py.comercializacao import scrape_viti_comercializacao
@@ -8,7 +8,7 @@ from web_scraping_py.importacao_exportacao  import scrape_viti_imp_exp
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', nome='Home')
 
 
 @app.route('/producao', methods=['POST', 'GET'])

@@ -25,20 +25,20 @@
                 <a class="header-logout" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a class="header-login" href="{{ url_for('login') }}">Login</a>
-                <a class="header-login" href="{{ url_for('register') }}">Registro</a>
+                <a class="header-login" href="{{ url_for('register') }}">Registre-se</a>
             {% endif %}
         </div>
         </div>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul id="messages" class="list-unstyled">
-        {% for category, message in messages %}
-        <li class="alert alert-{{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        {% if messages %}
+        <ul id="messages" class="list-unstyled">
+            {% for category, message in messages %}
+            <li class="alert alert-{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
     {% endwith %}
 
