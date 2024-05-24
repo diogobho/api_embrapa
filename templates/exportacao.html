@@ -3,18 +3,17 @@
 
 <!-- Formulário para escolher o ano -->
 <form method="post">
+    {{ form.hidden_tag() }}
     <h1>{{nome}}</h1>
-    <!-- <label for="opcao">Escolha a opção:</label>
-        <select id="opcao" name="opcao" required>
-            <option value="viniferas">Viníferas</option>
-            <option value="americanas_hibridas">Americanas e Híbridas</option>
-            <option value="uvas_mesa">Uvas de Mesa</option>
-            <option value="sem_classificacao">Sem Classificação</option>
-        </select> -->
+    <div>
+        {{ form.ano2023.label(class='form-label') }}
+        {{ form.ano2023(class='form-control') }}
+    </div>
+    <div>
+        {{form.submit(class="btn btn-primary")}}
+    </div>
+</form>
 
-    <label for="ano">Escolha o ano (1970-2023):</label>
-    <input type="number" id="ano" name="ano" min="1970" max="2023" required>
-    <button type="submit">Buscar</button>
 </form>
 
 <!-- Se houver dados para exibir, renderiza o HTML do DataFrame -->

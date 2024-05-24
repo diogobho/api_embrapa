@@ -127,6 +127,7 @@ table {
   border-collapse: collapse;
   width: 100%; /* ou uma largura fixa, se preferir */
   max-width: 100%;
+  font-family: "Roboto", sans-serif;
 }
 
 th {
