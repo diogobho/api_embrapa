@@ -1,26 +1,29 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from embrapa import app, db
 from models import Usuarios
-from forms import UserForms
+from forms import UserForms, LoginForms
 
 @app.route('/login')
 def login():
+
     proxima = request.args.get('proxima', url_for('index'))
 
-    if 'usuario_logado' in session:
-        flash('Você já está logado.', 'info')
-        return redirect(url_for('index'))
+    form = LoginForms()
     
-    return render_template('login.html', proxima=proxima , nome = 'Login')
+    return render_template('login.html', proxima=proxima , nome = 'Login', form=form)
 
-@app.route('/autenticar', methods=['POST'])
+@app.route('/autenticar', methods=['POST', 'GET'])
 def autenticar():
-    usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
+    
+    form = LoginForms(request.form)
+
+    usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
+
     if usuario:
-        if request.form['senha'] == usuario.senha:
+        if form.senha.data == usuario.senha:
             session['usuario_logado'] = usuario.nickname
             flash(usuario.nickname + ' logou com sucesso!', 'success')
-            proxima_pag = request.form.get('proxima', url_for('index'))
+            proxima_pag = request.form['proxima']
             return redirect(proxima_pag)
         
         else:

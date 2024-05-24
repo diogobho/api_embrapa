@@ -3,9 +3,18 @@
 
     <form method="POST" action="{{ url_for('autenticar') }}">
         <input type="hidden" name="proxima" value="{{ proxima }}">
+        {{ form.csrf_token() }}
         <h1>Login</h1>
-        <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
-        <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
-        <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+        <div>
+            {{ form.nickname.label(class='form-label') }}
+            {{ form.nickname(class='form-control') }}
+        </div>
+        <div>
+            {{ form.senha.label(class='form-label') }}
+            {{ form.senha(class='form-control') }}
+        </div>
+        <div>
+            {{ form.login(class="btn btn-primary") }}
+        </div>
     </form>
 {%endblock%}
