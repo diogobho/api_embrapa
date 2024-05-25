@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, session, flash, url_for
 from embrapa import app, db
 from models import Usuarios
 from forms import UserForms, LoginForms
+from flask_bcrypt import check_password_hash, generate_password_hash
 
 @app.route('/login')
 def login():
@@ -19,17 +20,13 @@ def autenticar():
 
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
 
-    if usuario:
-        if form.senha.data == usuario.senha:
-            session['usuario_logado'] = usuario.nickname
-            flash(usuario.nickname + ' logou com sucesso!', 'success')
-            proxima_pag = request.form['proxima']
-            return redirect(proxima_pag)
-        
-        else:
+    senha = check_password_hash(usuario.senha, form.senha.data)
 
-            flash('Login não efetuado.', 'error')
-            return redirect(url_for('login'))
+    if usuario and senha:
+        session['usuario_logado'] = usuario.nickname
+        flash(usuario.nickname.capitalize() + ' logou com sucesso!', 'success')
+        proxima_pag = request.form['proxima']
+        return redirect(proxima_pag)
     else:
         flash('Usuário não encontrado.', 'error')
         return redirect(url_for('login'))
@@ -59,7 +56,8 @@ def register():
             return redirect(url_for('register'))
 
         try:
-            novo_usuario = Usuarios(nome=nome, nickname=nickname, senha=senha1)
+            senha_hash = generate_password_hash(senha1).decode('utf-8')
+            novo_usuario = Usuarios(nome=nome, nickname=nickname, senha=senha_hash)
             db.session.add(novo_usuario)
             db.session.commit()
             flash('Usuário registrado com sucesso!', 'success')

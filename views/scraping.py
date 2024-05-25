@@ -69,12 +69,14 @@ def comercializacao():
 @app.route('/processamento', methods=['POST', 'GET'])
 def processamento():
 
+    form = AnoForms(request.form)
+
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('login',
                                 proxima=url_for('processamento')))
     
     if request.method == 'POST':
-        user_year = int(request.form['ano'])
+        user_year = int(form.ano2022.data)
         user_option = request.form['opcao']
 
         df = scrape_viti_processamento(user_year, user_option)
@@ -83,12 +85,14 @@ def processamento():
         return render_template('processamento.html', 
                                table=df_html, 
                                user_year=user_year,  
-                               nome = 'Processamento')
+                               nome = 'Processamento',
+                               form = form)
     
     elif request.method == 'GET':
         return render_template('processamento.html', 
                                table=None,  
-                               nome = 'Processamento')
+                               nome = 'Processamento',
+                               form = form)
         
 @app.route('/importacao', methods=['POST', 'GET'])
 def importacao():

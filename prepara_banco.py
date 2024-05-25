@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 from urllib.parse import urlparse
+from flask_bcrypt import generate_password_hash
 
 # Credenciais fornecidas pelo Railway
 MYSQL_URL = "mysql://root:fuMbhrInziYYPGAPxqLGdVTIUHCxDUac@viaduct.proxy.rlwy.net:30626/railway"
@@ -57,11 +58,11 @@ for tabela_nome in TABLES:
 # Inserindo usuários
 usuario_sql = 'INSERT IGNORE INTO usuarios (nome, nickname, senha) VALUES (%s, %s, %s)'
 usuarios = [
-    ("Bruno Divino", "BD", "alohomora"),
-    ("Camila Ferreira", "Mila", "paozinho"),
-    ("Guilherme Louro", "Cake", "python_eh_vida"),
-    ("Diogo", "Didico", "teste"),
-    ("Reryson", "Re", "teste")
+    ("Bruno Divino", "BD", generate_password_hash("alohomora").decode('utf-8') ),
+    ("Camila Ferreira", "Mila", generate_password_hash("paozinho").decode('utf-8')),
+    ("Guilherme Louro", "Cake", generate_password_hash("python_eh_vida").decode('utf-8')),
+    ("Diogo", "Didico", generate_password_hash("teste").decode('utf-8')),
+    ("Reryson", "Re", generate_password_hash("teste").decode('utf-8'))
 ]
 cursor.executemany(usuario_sql, usuarios)
 
