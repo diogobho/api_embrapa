@@ -6,12 +6,6 @@ from web_scraping_py.processamento import scrape_viti_processamento
 from web_scraping_py.importacao_exportacao  import scrape_viti_imp_exp
 from forms import AnoForms
 
-
-@app.route('/')
-def index():
-    return render_template('index.html', nome='Home')
-
-
 @app.route('/producao', methods=['POST', 'GET'])
 def producao():
 

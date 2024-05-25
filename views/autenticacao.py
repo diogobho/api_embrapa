@@ -7,7 +7,7 @@ from flask_bcrypt import check_password_hash, generate_password_hash
 @app.route('/login')
 def login():
 
-    proxima = request.args.get('proxima', url_for('index'))
+    proxima = request.args.get('proxima', url_for('producao'))
 
     form = LoginForms()
     
