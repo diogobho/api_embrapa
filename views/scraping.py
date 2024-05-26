@@ -71,9 +71,8 @@ def processamento():
     
     if request.method == 'POST':
         user_year = int(form.ano2022.data)
-        user_option = request.form['opcao']
 
-        df = scrape_viti_processamento(user_year, user_option)
+        df = scrape_viti_processamento(user_year, 'opt_03')
         df_html = df.to_html(index=False)
 
         return render_template('processamento.html', 
