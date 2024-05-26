@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, session, url_for
-from FIAP.sandbox.api_embrapa.main import app
+from main import app
 from web_scraping_py.producao import scrape_viti_producao
 from web_scraping_py.comercializacao import scrape_viti_comercializacao
 from web_scraping_py.processamento import scrape_viti_processamento

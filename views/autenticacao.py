@@ -1,10 +1,10 @@
 from flask import render_template, request, redirect, session, flash, url_for
-from FIAP.sandbox.api_embrapa.main import app, db
+from main import app, db
 from models import Usuarios
 from forms import UserForms, LoginForms
 from flask_bcrypt import check_password_hash, generate_password_hash
 
-@app.route('/login')
+@app.route('/')
 def login():
 
     proxima = request.args.get('proxima', url_for('producao'))
