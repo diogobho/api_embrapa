@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, session, flash, url_for
-from embrapa import app, db
+from FIAP.sandbox.api_embrapa.main import app, db
 from models import Usuarios
 from forms import UserForms, LoginForms
 from flask_bcrypt import check_password_hash, generate_password_hash

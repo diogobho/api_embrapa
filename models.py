@@ -1,4 +1,4 @@
-from embrapa import db
+from FIAP.sandbox.api_embrapa.main import db
 
 class Usuarios(db.Model):
     nickname = db.Column(db.String(8), primary_key=True)
