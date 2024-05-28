@@ -1,0 +1,475 @@
+openapi: 3.0.1
+info: 
+  title: API de Raspagem de dados
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:5000/
+  description: API de teste
+- url: https://apiembrapa-production.up.railway.app/
+  description: API de prod
+paths:
+  /:
+    get:
+      summary: Página de Login
+      description: Exibe o formulário para login do usuário.
+      parameters: 
+      - in: query
+        name: proxima
+        schema:
+          type: string
+        description: A URL que será feito o redirecionamento após o login do usuário.
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <html>...</html>
+        '500':
+          description: Erro ao carregar a página de login.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html>Erro interno do servidor</html>"
+  /autenticar:
+    post:
+      summary: Autenticar um usuário
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                  description: O nome de usuário do usuário.
+                senha:
+                  type: string
+                  description: A senha do usuário.
+                csrf_token:
+                  type: string
+                  description: O token CSRF para proteger contra ataques CSRF.
+              required:
+                - nickname
+                - senha
+                - csrf_token
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF enviado no cabeçalho.
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Login bem-sucedido.
+        '302':
+          description: Redirecionamento para a página de Login com sucesso.
+          headers:
+            Location:
+              description: URL para redirecionamento
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Página não encontrada.
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Erro interno do servidor.
+  /logout:
+    get:
+      summary: Logout do usuário
+      description: Rota de logout do usuário.
+      responses:
+        '302':
+          description: Redirecionamento para a página de Login com sucesso.
+          headers:
+            Location:
+              description: URL para redirecionamento
+              schema:
+                type: string
+        '200':
+          description: Página de login com mensagem de logout
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html>...</html>"
+        '500':
+          description: Erro interno do servidor.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html>Erro interno do servidor</html>"
+  /register:
+    get:
+      summary: Obter o formulário de registro
+      responses:
+        '200':
+          description: Formulário de registro exibido com sucesso
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML de registro
+    post:
+      summary: Registrar um novo usuário
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: O nome do usuário.
+                nickname:
+                  type: string
+                  description: O apelido do usuário.
+                senha1:
+                  type: string
+                  description: A senha do usuário.
+                senha2:
+                  type: string
+                  description: Confirmação da senha do usuário.
+                csrf_token:
+                  type: string
+                  description: O token CSRF para proteger contra ataques CSRF.
+              required:
+                - nome
+                - nickname
+                - senha1
+                - senha2
+                - csrf_token
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF enviado no cabeçalho.
+      responses:
+        '200':
+          description: Usuário registrado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Usuário registrado com sucesso!
+        '409':
+          description: Senhas não coincidem
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Senhas não coincidem.
+        '500':
+          description: Erro interno ao registrar o usuário
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Erro ao registrar o usuário. Tente novamente.
+  /producao:
+    get:
+      summary: Renderizar formulário para escolher o ano de produção vitivinícola
+      responses:
+        '200':
+          description: Formulário HTML para escolher o ano de produção
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML para escolher o ano de produção
+
+    post:
+      summary: Obter informações de produção vitivinícola para o ano especificado
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF para proteger contra ataques CSRF
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ano2022:
+                  type: string
+                  description: Ano para o qual deseja obter informações de produção
+                csrf_token:
+                  type: string
+                  description: Token CSRF para proteger contra ataques CSRF
+              required:
+                - ano2022
+                - csrf_token
+      responses:
+        '200':
+          description: Informações de produção obtidas com sucesso
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+          content:
+            text/html:
+              schema:
+                type: string
+                example: O token CSRF e o ano são obrigatórios para esta solicitação
+  /comercializacao:
+    get:
+      summary: Renderizar formulário para escolher o ano de comercialização da vitivinícola
+      responses:
+        '200':
+          description: Formulário HTML para escolher o ano de comercialização
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML para escolher o ano de comercialização
+
+    post:
+      summary: Obter informações de comercialização da vitivinícola para o ano especificado.
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF para proteger contra ataques CSRF.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ano2022:
+                  type: string
+                  description: Ano para o qual deseja obter informações de comercialização.
+                csrf_token:
+                  type: string
+                  description: Token CSRF para proteger contra ataques CSRF.
+              required:
+                - ano2022
+                - csrf_token
+      responses:
+        '200':
+          description: Informações de produção obtidas com sucesso.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: O token CSRF e o ano são obrigatórios para esta solicitação
+  /processamento:
+    get:
+      summary: Renderizar formulário para escolher o ano de processamento da vitivinícola
+      responses:
+        '200':
+          description: Formulário HTML para escolher o ano de processamento
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML para escolher o ano de processamento
+
+    post:
+      summary: Obter informações de processamento da vitivinícola para o ano especificado.
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF para proteger contra ataques CSRF.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ano2022:
+                  type: string
+                  description: Ano para o qual deseja obter informações de processamento.
+                csrf_token:
+                  type: string
+                  description: Token CSRF para proteger contra ataques CSRF.
+              required:
+                - ano2022
+                - csrf_token
+      responses:
+        '200':
+          description: Informações de processamento obtidas com sucesso.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: O token CSRF e o ano são obrigatórios para esta solicitação
+  /importacao:
+    get:
+      summary: Renderizar formulário para escolher o ano de importação da vitivinícola
+      responses:
+        '200':
+          description: Formulário HTML para escolher o ano de importação
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML para escolher o ano de importação
+
+    post:
+      summary: Obter informações de importação da vitivinícola para o ano especificado.
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF para proteger contra ataques CSRF.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ano2023:
+                  type: string
+                  description: Ano para o qual deseja obter informações de importação.
+                csrf_token:
+                  type: string
+                  description: Token CSRF para proteger contra ataques CSRF.
+              required:
+                - ano2023
+                - csrf_token
+      responses:
+        '200':
+          description: Informações de importação obtidas com sucesso.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: O token CSRF e o ano são obrigatórios para esta solicitação
+  /exportacao:
+    get:
+      summary: Renderizar formulário para escolher o ano de exportação da vitivinícola
+      responses:
+        '200':
+          description: Formulário HTML para escolher o ano de exportação
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Formulário HTML para escolher o ano de exportação
+
+    post:
+      summary: Obter informações de exportação da vitivinícola para o ano especificado.
+      parameters:
+        - name: X-CSRFToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Token CSRF para proteger contra ataques CSRF.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ano2023:
+                  type: string
+                  description: Ano para o qual deseja obter informações de exportação.
+                csrf_token:
+                  type: string
+                  description: Token CSRF para proteger contra ataques CSRF.
+              required:
+                - ano2023
+                - csrf_token
+      responses:
+        '200':
+          description: Informações de exportação obtidas com sucesso.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: O token CSRF e o ano são obrigatórios para esta solicitação
+
+
+
+
+
+
+    
+
+
+                
+           
+        

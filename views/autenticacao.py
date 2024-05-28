@@ -1,8 +1,17 @@
-from flask import render_template, request, redirect, session, flash, url_for
+from flask import render_template, request, redirect, session, flash, url_for,send_from_directory
 from main import app, db
 from models import Usuarios
 from forms import UserForms, LoginForms
 from flask_bcrypt import check_password_hash, generate_password_hash
+from flask import jsonify
+from flask_wtf.csrf import generate_csrf
+
+
+# @app.route('/obter_csrf_token/', methods=['GET'])
+# def obter_csrf_token():
+#     token = generate_csrf()
+#     return jsonify({'csrf_token': token})
+
 
 @app.route('/')
 def login():
@@ -17,20 +26,26 @@ def login():
 def autenticar():
     
     form = LoginForms(request.form)
-
-    usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
-
-    senha = check_password_hash(usuario.senha, form.senha.data)
-
-    if usuario and senha:
-        session['usuario_logado'] = usuario.nickname
-        flash(usuario.nickname.capitalize() + ' logou com sucesso!', 'success')
-        proxima_pag = request.form['proxima']
-        return redirect(proxima_pag)
+    if form.validate_on_submit():
+        usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
+        
+        if usuario is not None: 
+            senha = check_password_hash(usuario.senha, form.senha.data)
+            if senha:  
+                session['usuario_logado'] = usuario.nickname
+                flash(usuario.nickname.capitalize() + ' logou com sucesso!', 'success')
+                proxima_pag = request.form.get('proxima', url_for('producao'))
+                return redirect(proxima_pag)
+            else:
+                flash('Senha incorreta.', 'error')
+                return redirect(url_for('login'))
+        else:
+            flash('Usuário não encontrado.', 'error')
+            return redirect(url_for('login'))
     else:
-        flash('Usuário não encontrado.', 'error')
+        flash('Formulário não validado.', 'error')
         return redirect(url_for('login'))
-    
+
 @app.route('/logout')
 def logout():
 

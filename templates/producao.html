@@ -1,6 +1,5 @@
 {%extends 'partials/_head.html'%}
 {%block conteudo%}
-
     <!-- Formulário para escolher o ano -->
     <form method="post">
         {{ form.hidden_tag() }}
@@ -13,7 +12,6 @@
             {{form.submit(class="btn btn-primary")}}
         </div>
     </form>
-    
     <!-- Se houver dados para exibir, renderiza o HTML do DataFrame -->
     <div class="table">
         {% if table %}

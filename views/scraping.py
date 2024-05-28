@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, url_for
+from flask import render_template, request, redirect, session, url_for, flash
 from main import app
 from web_scraping_py.producao import scrape_viti_producao
 from web_scraping_py.comercializacao import scrape_viti_comercializacao
@@ -15,23 +15,23 @@ def producao():
         return redirect(url_for('login',
                                 proxima=url_for('producao')))
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         user_year = int(form.ano2022.data)
+        try:
+            df = scrape_viti_producao(user_year)
+            df_html = df.to_html(index=False)
 
-        df = scrape_viti_producao(user_year)
-        df_html = df.to_html(index=False)
-
-        return render_template('producao.html', 
-                                table=df_html, 
-                                user_year=user_year, 
-                                nome = 'Produção',
-                                form = form)
+            return render_template('producao.html', 
+                                    table=df_html, 
+                                    user_year=user_year, 
+                                    nome = 'Produção',
+                                    form = form)
+        except Exception as e:
+            flash('Erro ao obter os dados da tabela de Produção')
+            return render_template('producao.html', table=None, nome='Produção', form=form)
     
-    elif request.method == 'GET':
-        return render_template('producao.html', 
-                               table=None,  
-                               nome = 'Produção',
-                               form = form)
+    return render_template('producao.html', table=None, nome='Produção', form=form)
+
     
 @app.route('/comercializacao', methods=['POST', 'GET'])
 def comercializacao():
